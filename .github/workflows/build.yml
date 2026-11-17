@@ -15,9 +15,9 @@ jobs:
     # windows-2022 ships WiX Toolset 3, which jpackage (JDK 21) needs for the .exe installer.
     runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "21"
@@ -41,7 +41,7 @@ jobs:
           Compress-Archive -Path build/jpackage/gamesense-essentials -DestinationPath "dist/gamesense-essentials-hebrew-$ver-portable.zip"
           Get-ChildItem dist
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: gamesense-essentials-hebrew
           path: dist/*
