@@ -52,17 +52,15 @@ object BidiText {
         val bidi = Bidi(text, if (rtl) Bidi.DIRECTION_RIGHT_TO_LEFT else Bidi.DIRECTION_LEFT_TO_RIGHT)
         val runCount = bidi.runCount
         val levels = ByteArray(runCount) { bidi.getRunLevel(it).toByte() }
-        val runs: Array<Any> = Array(runCount) { i ->
-            Triple(bidi.getRunStart(i), bidi.getRunLimit(i), bidi.getRunLevel(i))
-        }
+        // Run indices, reordered into visual order.
+        val runs: Array<Any> = Array(runCount) { it }
         Bidi.reorderVisually(levels, 0, runs, 0, runCount)
 
         val result = ArrayList<String>(text.length)
         for (run in runs) {
-            @Suppress("UNCHECKED_CAST")
-            val (start, limit, level) = run as Triple<Int, Int, Int>
-            val runClusters = clusters(text.substring(start, limit))
-            if (level % 2 == 1) {
+            val i = run as Int
+            val runClusters = clusters(text.substring(bidi.getRunStart(i), bidi.getRunLimit(i)))
+            if (bidi.getRunLevel(i) % 2 == 1) {
                 runClusters.asReversed().forEach { result.add(mirror(it)) }
             } else {
                 result.addAll(runClusters)
