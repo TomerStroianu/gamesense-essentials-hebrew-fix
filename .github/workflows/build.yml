@@ -29,11 +29,13 @@ jobs:
 
       - name: Build jar, app image and installer
         shell: bash
-        run: ./gradlew fatJar jpackage --no-daemon
+        run: ./gradlew fatJar jpackage --no-daemon --info | grep -iE "jpackage|wix|installer|\.exe" || true
 
       - name: Collect release files
         shell: pwsh
         run: |
+          $ErrorActionPreference = 'Stop'
+          Get-ChildItem -Recurse build/jpackage -Depth 1 | Select-Object FullName, Length
           $ver = (Select-String -Path build.gradle.kts -Pattern '^version = "(.+)"').Matches[0].Groups[1].Value
           New-Item -ItemType Directory -Force dist | Out-Null
           Copy-Item "build/libs/gamesense-essentials-fat-$ver.jar" "dist/gamesense-essentials-hebrew-$ver.jar"
