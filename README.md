@@ -1,3 +1,7 @@
+> **Hebrew/RTL fork** – this fork displays Hebrew and Arabic song names and artists correctly on the OLED
+> (any mix with English and numbers, with scrolling in the reading direction).
+> Download it from [Releases](../../releases). Based on [mtricht/gamesense-essentials](https://github.com/mtricht/gamesense-essentials).
+
 # gamesense-essentials
 [![Downloads](https://img.shields.io/github/downloads/mtricht/gamesense-essentials/total.svg)](https://github.com/mtricht/gamesense-essentials/releases)
 

@@ -35,6 +35,7 @@ class SystemTray {
                 createSettingMenuItem("Enable song icon", "songIcon"),
                 createSettingMenuItem("Flip song title and artist", "songInfoFlip", false),
                 createSettingMenuItem("Display song scrolling separator", "songSeparator", false),
+                createSettingMenuItem("Fix Hebrew/Arabic text direction", "fixRtl"),
                 tickRate,
                 exit
             ).forEach(menu::add)
@@ -60,7 +61,8 @@ class SystemTray {
                 if (setting == "songInfoFlip" || setting == "songIcon") {
                     Main.registerSongHandler(client!!)
                 }
-                if (setting == "songSeparator") {
+                // Song text is laid out once per song, so restart to apply these immediately.
+                if (setting == "songSeparator" || setting == "songIcon" || setting == "fixRtl") {
                     timer.cancel()
                     timer.purge()
                     timer = Timer()

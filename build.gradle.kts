@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "eu.tricht.gamesense"
-version = "1.15.0"
+version = "1.15.1"
 
 repositories {
     mavenCentral()
@@ -21,6 +21,11 @@ dependencies {
     implementation("net.java.dev.jna:jna:5.17.0")
     implementation("net.java.dev.jna:jna-platform:5.17.0")
     implementation("com.hynnet:jacob:1.18")
+    testImplementation(kotlin("test"))
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks {
@@ -61,6 +66,7 @@ runtime {
     options.set(listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages"))
     modules.set(listOf("java.desktop", "java.logging", "java.datatransfer", "jdk.localedata"))
     jpackage {
+        installerType = "exe"
         imageOptions.addAll(listOf("--icon", "src/main/resources/icon.ico"))
         installerOptions.addAll(
             listOf(
